@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import configureStore from './configureStore'
+import configureStore from './Redux/configureStore'
 import { Provider } from 'react-redux'
+import { BrowserRouter } from "react-router-dom";
 
 
 const store = configureStore()
@@ -13,7 +14,9 @@ console.log(store.getState())
 ReactDOM.render(
     <Provider store={store}>
         <React.StrictMode>
-            <App />
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
         </React.StrictMode>
     </Provider>,
     document.getElementById('root')

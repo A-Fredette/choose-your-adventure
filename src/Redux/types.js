@@ -1,0 +1,5 @@
+const AUTHENTICATE_USER = "AUTHENTICATE_USER"
+
+export default {
+    AUTHENTICATE_USER,
+}
