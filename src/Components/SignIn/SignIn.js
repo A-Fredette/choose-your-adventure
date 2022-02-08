@@ -26,46 +26,48 @@ function SignIn({ users }) {
 
 
     return (
-        <Card sx={{ minWidth: 275 }}>
-            <CardContent>
-                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                    Welcome to the Would You Rather App!
-                </Typography>
-                <Typography variant="h5" component="div">
-                </Typography>
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    Please sign in to continue.
-                </Typography>
+        <div style={{ width: '450px', display: 'block', margin: 'auto' }}>
+            <Card>
+                <CardContent>
+                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                        Welcome to the Would You Rather App!
+                    </Typography>
+                    <Typography variant="h5" component="div">
+                    </Typography>
+                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                        Please sign in to continue.
+                    </Typography>
 
-                <SignInStyles>
-                    <FormControl required>
-                        <InputLabel id="demo-simple-select-label">Select User</InputLabel>
-                        <Select
-                            labelId="select-user"
-                            id="select-user"
-                            label="User"
-                            placeholder="-- Select User --"
-                            required
-                            displayEmpty
-                            onChange={(e) => setUser(e.target.value)}
-                        >
+                    <SignInStyles>
+                        <FormControl required>
+                            <InputLabel id="demo-simple-select-label">Select User</InputLabel>
+                            <Select
+                                labelId="select-user"
+                                id="select-user"
+                                label="User"
+                                placeholder="-- Select User --"
+                                required
+                                displayEmpty
+                                onChange={(e) => setUser(e.target.value)}
+                            >
 
-                            { users.map(user =>
-                                <MenuItem key={user.id} value={ user.id }>{ user.firstName + ' ' + user.lastName }</MenuItem>
-                            )}
+                                { users.map(user =>
+                                    <MenuItem key={user.id} value={ user.id }>{ user.firstName + ' ' + user.lastName }</MenuItem>
+                                )}
 
-                        </Select>
-                    </FormControl>
+                            </Select>
+                        </FormControl>
 
-                </SignInStyles>
+                    </SignInStyles>
 
-            </CardContent>
-            <CardActions>
-                <Button onClick={handleSubmit}>
-                    Log In
-                </Button>
-            </CardActions>
-        </Card>
+                </CardContent>
+                <CardActions>
+                    <Button onClick={handleSubmit}>
+                        Log In
+                    </Button>
+                </CardActions>
+            </Card>
+        </div>
     )
 }
 

@@ -10,10 +10,10 @@ const AppRoutes = () => {
         <Routes>
             <Route
                 path=''
-                element={<SignIn/>}
+                // element={<SignIn/>}
             >
             </Route>
-            <Route path='/signin' element={<SignIn/>}>
+            <Route path='/signin'>
             </Route>
         </Routes>
     )

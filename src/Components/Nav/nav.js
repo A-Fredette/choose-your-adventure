@@ -8,7 +8,9 @@ import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import { connect, useDispatch } from "react-redux"
 import { logoutUser } from '../../Redux/actions'
-import { useSelector } from "react-redux";
+import { useSelector } from "react-redux"
+import CreateQuestion from "../createQuestion"
+import SignIn from "../SignIn/SignIn";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props
@@ -50,8 +52,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-
-
 const SimpleTabs = ({ auth }) => {
     console.log('NAV AUTH', auth)
     const classes = useStyles()
@@ -75,7 +75,7 @@ const SimpleTabs = ({ auth }) => {
                     <Tab label="New Question" {...a11yProps(1)} />
                     <Tab label="Leaderboard" {...a11yProps(2)} />
                     { auth.isAuthenticated &&
-                        <div>
+                        <div style={{ display: 'flex' }}>
                             <Typography>{currentUser.firstName + ' ' + currentUser.lastName}</Typography>
                             <Button onClick={handleLogout}>Logout</Button>
                         </div>
@@ -83,13 +83,22 @@ const SimpleTabs = ({ auth }) => {
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
-                Item One
+                { auth.isAuthenticated
+                    ?  <div>Home</div>
+                    : <SignIn />
+                }
             </TabPanel>
             <TabPanel value={value} index={1}>
-                Item Two
+                { auth.isAuthenticated
+                    ?  <CreateQuestion />
+                    : <SignIn />
+                }
             </TabPanel>
             <TabPanel value={value} index={2}>
-                Item Three
+                { auth.isAuthenticated
+                    ?  <div>Leaderboard</div>
+                    : <SignIn />
+                }
             </TabPanel>
         </div>
     );

@@ -8,3 +8,8 @@ export const authenticateUser = user => ({
 export const logoutUser = () => ({
     type: 'LOGOUT_USER'
 })
+
+export const createQuestion = card => ({
+    type: 'CREATE_CARD',
+    payload: card
+})
