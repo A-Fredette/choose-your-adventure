@@ -9,8 +9,9 @@ import Button from '@material-ui/core/Button'
 import { connect, useDispatch } from "react-redux"
 import { logoutUser } from '../../Redux/actions'
 import { useSelector } from "react-redux"
-import CreateQuestion from "../createQuestion"
+import CreateQuestion from "../CreateQuestion/CreateQuestion"
 import SignIn from "../SignIn/SignIn";
+import Leaderboard from "../Leaderboard/Leaderboard";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props
@@ -96,7 +97,7 @@ const SimpleTabs = ({ auth }) => {
             </TabPanel>
             <TabPanel value={value} index={2}>
                 { auth.isAuthenticated
-                    ?  <div>Leaderboard</div>
+                    ?  <Leaderboard />
                     : <SignIn />
                 }
             </TabPanel>

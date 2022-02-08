@@ -16,7 +16,7 @@ export const initialState = {
         { id:'4eb425e3-9a24-4fe2-8dc3-9a8cc990e668', author: '7d2e0b1e-5221-4adf-83d5-a87f0185ae44', optionOne: 'optionOne', optionTwo: 'optionTwo' }
     ],
     responses: [
-        { by: '7d2e0b1e-5221-4adf-83d5-a87f0185ae44', card: '4eb425e3-9a24-4fe2-8dc3-9a8cc990e668', choice: 1}
+        { by: '7d2e0b1e-5221-4adf-83d5-a87f0185ae44', card: '4eb425e3-9a24-4fe2-8dc3-9a8cc990e668', choice: 1 }
     ]
 }
 
@@ -30,4 +30,3 @@ function configureStore() {
 }
 
 export default configureStore
-

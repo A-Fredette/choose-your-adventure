@@ -9,15 +9,17 @@ import {
     Typography,
 } from "@material-ui/core"
 import { useDispatch, useSelector } from "react-redux"
-import { createQuestion } from "../Redux/actions";
+import { createQuestion } from "../../Redux/actions";
 
 const CreateQuestion = () => {
     const [newQuestion, setNewQuestion] = useState({ optionOne: '', optionTwo: '' })
     const dispatch = useDispatch()
     const author = useSelector(state => state.auth.user)
 
-    const handleSubmitQuestion = () =>
+    const handleSubmitQuestion = () => {
         dispatch(createQuestion({...newQuestion, author, id: crypto.randomUUID() }))
+        setNewQuestion({ optionOne: '', optionTwo: '' })
+    }
 
     console.log(newQuestion)
 
@@ -47,11 +49,13 @@ const CreateQuestion = () => {
                                 variant="outlined"
                                 required
                                 onChange={(e) =>
-                                    setNewQuestion( state => ({...state, optionOne: e.target.value })
+                                    setNewQuestion(
+                                        state =>
+                                            ({...state, optionOne: e.target.value })
                                 )}
                             />
 
-                            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                            <Typography sx={{ mb: 1.5 }} color="text.såecondary">
                                 ------ OR ------
                             </Typography>
 
@@ -64,7 +68,9 @@ const CreateQuestion = () => {
                                 variant="outlined"
                                 required
                                 onChange={(e) =>
-                                    setNewQuestion( state => ({...state, optionTwo: e.target.value })
+                                    setNewQuestion(
+                                        state =>
+                                            ({...state, optionTwo: e.target.value })
                                 )}
                             />
 
