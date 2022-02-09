@@ -11,7 +11,8 @@ import { logoutUser } from '../../Redux/actions'
 import { useSelector } from "react-redux"
 import CreateQuestion from "../CreateQuestion/CreateQuestion"
 import SignIn from "../SignIn/SignIn";
-import Leaderboard from "../Leaderboard/Leaderboard";
+import Leaderboard from "../Leaderboard/Leaderboard"
+import Home from "../Home/Home"
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props
@@ -85,19 +86,19 @@ const SimpleTabs = ({ auth }) => {
             </AppBar>
             <TabPanel value={value} index={0}>
                 { auth.isAuthenticated
-                    ?  <div>Home</div>
+                    ? <Home />
                     : <SignIn />
                 }
             </TabPanel>
             <TabPanel value={value} index={1}>
                 { auth.isAuthenticated
-                    ?  <CreateQuestion />
+                    ? <CreateQuestion />
                     : <SignIn />
                 }
             </TabPanel>
             <TabPanel value={value} index={2}>
                 { auth.isAuthenticated
-                    ?  <Leaderboard />
+                    ? <Leaderboard />
                     : <SignIn />
                 }
             </TabPanel>
