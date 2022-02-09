@@ -1,18 +1,22 @@
 import React from 'react'
-import {useSelector} from "react-redux"
+import { useSelector } from "react-redux"
 import {
     Card,
     CardActions,
     CardContent,
-    Box,
     Typography
 } from "@material-ui/core"
 
-const ResultCard = () => {
+const ResultCard = ({ card }) => {
 
-    const answeredQuestions = useSelector(state => state.responses.filter(r => r.by === id).length)
-    const created = useSelector(state => state.cards.filter(r => r.author === id).length)
-    const authUser = useSelector(state => state.auth.user === id)
+    const { id, author, optionOne, optionTwo } = card
+
+    const authorInfo = useSelector(state => state.users.find(u => u.id === author))
+    const user = useSelector(state => state.auth.user)
+    const cardResponses = useSelector(state => state.responses.filter(r => r.card === id))
+
+    const choiceOneTotal = cardResponses.filter(r => r.choice === 1).length
+    const choiceTwoTotal = cardResponses.filter(r => r.choice === 2).length
 
     return (
         <div style={{ width: '450px', display: 'block', margin: 'auto' }}>
@@ -20,27 +24,23 @@ const ResultCard = () => {
                 <CardContent>
 
                     <Typography sx={{ fontSize: 14 }} color="text.primary" gutterBottom>
+                        {'Asked by ' + authorInfo.firstName + ' ' + authorInfo.lastName}
                     </Typography>
 
-                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                        Answered Questions: { answeredQuestions }
+                    <Typography sx={{ fontSize: 14 }} color="text.primary" gutterBottom>
+                        Results
                     </Typography>
 
-                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                        Created Questions: {created}
+                    <Typography sx={{ fontSize: 14 }} color="text.primary" gutterBottom>
+                        {optionOne}
+                        <p>{choiceOneTotal} Choices</p>
                     </Typography>
 
-                    <Box>
+                    <Typography sx={{ fontSize: 14 }} color="text.primary" gutterBottom>
+                        {optionTwo}
+                        <p>{choiceTwoTotal} Choices</p>
+                    </Typography>
 
-                        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                            Total Score
-                        </Typography>
-
-                        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                            { answeredQuestions + created }
-                        </Typography>
-
-                    </Box>
 
                 </CardContent>
                 <CardActions />
@@ -50,4 +50,3 @@ const ResultCard = () => {
 }
 
 export default ResultCard
-
