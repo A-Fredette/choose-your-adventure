@@ -18,7 +18,6 @@ const QuestionCard = ({ card }) => {
     const { id, optionOne, optionTwo, author } = card
 
     const [choice, setChoice] = useState(0)
-    const authorInfo = useSelector(state => state.users.find(u => u.id === author))
     const user = useSelector(state => state.auth.user)
     const dispatch = useDispatch()
 
@@ -32,7 +31,7 @@ const QuestionCard = ({ card }) => {
                     <CardContent>
 
                         <Typography sx={{ fontSize: 14 }} color="text.primary" gutterBottom>
-                            {authorInfo.firstName + ' ' + authorInfo.lastName + ' asks:'}
+                            {author + ' asks:'}
                         </Typography>
 
                         <FormControl sx={{ m: 3 }} variant="standard">

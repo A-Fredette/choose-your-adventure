@@ -1,10 +1,9 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import {Card, Select, MenuItem, CardContent, Typography, CardActions, FormControl, Button, InputLabel  } from '@material-ui/core'
 import { useDispatch } from 'react-redux'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
 import styled from "styled-components"
 import { authenticateUser } from '../../Redux/actions'
+import { _getUsers } from "../../_DATA"
 
 const SignInStyles = styled.div`
     width: auto;
@@ -14,16 +13,28 @@ const SignInStyles = styled.div`
   }
 `
 
-function SignIn({ users }) {
-    console.log(users)
+function SignIn() {
     const [user, setUser] = useState({})
+    const [users, setUsers] = useState([])
     const dispatch = useDispatch()
 
     const handleSubmit = () => {
-        console.log(user)
         dispatch(authenticateUser(user))
     }
 
+    console.log('SET USER:', user)
+
+    useEffect(() => {
+        _getUsers()
+            .then(dataUsers => {
+                const arr = Object.entries(dataUsers)
+                let processedUsers = []
+                arr.map(u => processedUsers.push(u[1]))
+
+                setUsers(processedUsers)
+            })
+            .catch(error => console.log(error))
+    },[])
 
     return (
         <div style={{ width: '450px', display: 'block', margin: 'auto' }}>
@@ -51,8 +62,10 @@ function SignIn({ users }) {
                                 onChange={(e) => setUser(e.target.value)}
                             >
 
-                                { users.map(user =>
-                                    <MenuItem key={user.id} value={ user.id }>{ user.firstName + ' ' + user.lastName }</MenuItem>
+                                { users.length > 0 && users.map(user =>
+                                        <MenuItem key={ user.id} value={ user }>{ user.name }
+                                            <img alt={`avatar of ${user.name}`} src={ user.avatarURL } style={{ width: '40px' }}/>
+                                        </MenuItem>
                                 )}
 
                             </Select>
@@ -71,12 +84,4 @@ function SignIn({ users }) {
     )
 }
 
-SignIn.propTypes = {
-    users: PropTypes.array.isRequired
-}
-
-function mapStateToProps(state) {
-    return { users: state.users }
-}
-
-export default connect(mapStateToProps)(SignIn)
+export default SignIn

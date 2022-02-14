@@ -8,7 +8,6 @@ import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import { connect, useDispatch } from "react-redux"
 import { logoutUser } from '../../Redux/actions'
-import { useSelector } from "react-redux"
 import CreateQuestion from "../CreateQuestion/CreateQuestion"
 import SignIn from "../SignIn/SignIn";
 import Leaderboard from "../Leaderboard/Leaderboard"
@@ -55,12 +54,11 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const SimpleTabs = ({ auth }) => {
-    console.log('NAV AUTH', auth)
     const classes = useStyles()
     const dispatch = useDispatch()
-    const currentUser = useSelector(state => state.users.find(u => u.id === state.auth.user))
     const [value, setValue] = React.useState(0)
-    console.log('CU', currentUser)
+
+    console.log('AUTH USER', auth)
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -78,7 +76,8 @@ const SimpleTabs = ({ auth }) => {
                     <Tab label="Leaderboard" {...a11yProps(2)} />
                     { auth.isAuthenticated &&
                         <div style={{ display: 'flex' }}>
-                            <Typography>{currentUser.firstName + ' ' + currentUser.lastName}</Typography>
+                            <img alt={`avatar of ${auth.user.name}`} src={ auth.user.avatarURL } style={{ width: '40px' }}/>
+                            <Typography>{auth.user.name}</Typography>
                             <Button onClick={handleLogout}>Logout</Button>
                         </div>
                     }
