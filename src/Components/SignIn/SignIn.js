@@ -2,8 +2,9 @@ import React, {useEffect, useState} from 'react'
 import {Card, Select, MenuItem, CardContent, Typography, CardActions, FormControl, Button, InputLabel  } from '@material-ui/core'
 import { useDispatch } from 'react-redux'
 import styled from "styled-components"
-import { authenticateUser } from '../../Redux/actions'
+import {authenticateUser, setUsersRedux } from '../../Redux/actions'
 import { _getUsers } from "../../_DATA"
+import { useNavigate } from "react-router-dom"
 
 const SignInStyles = styled.div`
     width: auto;
@@ -14,15 +15,16 @@ const SignInStyles = styled.div`
 `
 
 function SignIn() {
+    let navigate = useNavigate()
+
     const [user, setUser] = useState({})
     const [users, setUsers] = useState([])
     const dispatch = useDispatch()
 
     const handleSubmit = () => {
         dispatch(authenticateUser(user))
+        navigate("../", { replace: true })
     }
-
-    console.log('SET USER:', user)
 
     useEffect(() => {
         _getUsers()
@@ -32,6 +34,7 @@ function SignIn() {
                 arr.map(u => processedUsers.push(u[1]))
 
                 setUsers(processedUsers)
+                dispatch(setUsersRedux(processedUsers))
             })
             .catch(error => console.log(error))
     },[])

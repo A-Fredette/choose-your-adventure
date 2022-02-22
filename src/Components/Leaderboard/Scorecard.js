@@ -9,11 +9,14 @@ import {
 } from "@material-ui/core"
 import {ScorecardStyle} from "./Styled"
 
-const Scorecard = ({ firstName, lastName, id }) => {
+const Scorecard = ({ name, id }) => {
 
-    const answeredQuestions = useSelector(state => state.responses.filter(r => r.by === id).length)
-    const created = useSelector(state => state.cards.filter(r => r.author === id).length)
-    const authUser = useSelector(state => state.auth.user === id)
+    const answers = useSelector(state => state.users.find(u => u.id === id).answers)
+    const created = useSelector(state => state.users.find(u => u.id === id).questions)
+    const authUser = useSelector(state => state.auth.user.id === id)
+
+    const getScores = scoreObject =>
+        Object.keys(scoreObject).length
 
     return (
         <div style={{ width: '450px', display: 'block', margin: 'auto' }}>
@@ -22,15 +25,15 @@ const Scorecard = ({ firstName, lastName, id }) => {
                     <CardContent>
 
                         <Typography sx={{ fontSize: 14 }} color="text.primary" gutterBottom>
-                            { firstName + ' ' + lastName }
+                            { name }
                         </Typography>
 
                         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                            Answered Questions: { answeredQuestions }
+                            Answered Questions: { getScores(answers) }
                         </Typography>
 
                         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                            Created Questions: {created}
+                            Created Questions: { getScores(created) }
                         </Typography>
 
                         <Box>
@@ -40,7 +43,7 @@ const Scorecard = ({ firstName, lastName, id }) => {
                             </Typography>
 
                             <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                                { answeredQuestions + created }
+                                { getScores(answers) + getScores(created) }
                             </Typography>
 
                         </Box>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from "react-redux"
 import {
     Card,
@@ -10,13 +10,21 @@ import {
 const ResultCard = ({ card }) => {
 
     const { id, author, optionOne, optionTwo } = card
+    const users = useSelector(state => state.users)
+    const [answers, setAnswers] = useState([])
 
-    const authorInfo = useSelector(state => state.users.find(u => u.id === author))
-    const user = useSelector(state => state.auth.user)
-    const cardResponses = useSelector(state => state.responses.filter(r => r.card === id))
+    useEffect(() => {
+        const ans = users.map(u => u.answers[id]).filter(Boolean)
+        setAnswers(ans)
 
-    const choiceOneTotal = cardResponses.filter(r => r.choice === 1).length
-    const choiceTwoTotal = cardResponses.filter(r => r.choice === 2).length
+    },[id, users])
+
+    const getAnswerCounts = answers => {
+        return {
+            'optionOne': answers.filter(a => a === 'optionOne').length,
+            'optionTwo': answers.filter(a => a === 'optionTwo').length
+        }
+    }
 
     return (
         <div style={{ width: '450px', display: 'block', margin: 'auto' }}>
@@ -24,7 +32,7 @@ const ResultCard = ({ card }) => {
                 <CardContent>
 
                     <Typography sx={{ fontSize: 14 }} color="text.primary" gutterBottom>
-                        {'Asked by ' + authorInfo.firstName + ' ' + authorInfo.lastName}
+                        {'Asked by ' + author}
                     </Typography>
 
                     <Typography sx={{ fontSize: 14 }} color="text.primary" gutterBottom>
@@ -32,13 +40,13 @@ const ResultCard = ({ card }) => {
                     </Typography>
 
                     <Typography sx={{ fontSize: 14 }} color="text.primary" gutterBottom>
-                        {optionOne}
-                        <p>{choiceOneTotal} Choices</p>
+                        {optionOne.text}
+                        <p>{getAnswerCounts(answers).optionOne} Choices</p>
                     </Typography>
 
                     <Typography sx={{ fontSize: 14 }} color="text.primary" gutterBottom>
-                        {optionTwo}
-                        <p>{choiceTwoTotal} Choices</p>
+                        {optionTwo.text}
+                        <p>{getAnswerCounts(answers).optionTwo} Choices</p>
                     </Typography>
 
 

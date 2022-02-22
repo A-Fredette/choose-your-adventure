@@ -10,8 +10,7 @@ const Leaderboard = () => {
 
             { users.map(u =>
                 <Scorecard
-                    firstName={u.firstName}
-                    lastName={u.lastName}
+                    name={u.name}
                     id={u.id}
                 />
             )}

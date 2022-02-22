@@ -4,6 +4,7 @@ const CREATE_CARD = 'CREATE_CARD'
 const CREATE_RESPONSE = 'CREATE_RESPONSE'
 const LOGOUT_USER = 'LOGOUT_USER'
 const SET_QUESTIONS = 'SET_QUESTIONS'
+const SET_USERS = 'SET_USERS'
 
 function appReducer(state = initialState, action) {
     switch (action.type) {
@@ -20,27 +21,34 @@ function appReducer(state = initialState, action) {
             }
 
         case SET_QUESTIONS:
-            console.log('redux payload', action.payload)
             return {
                 ...state,
                 questions: action.payload,
             }
 
-        case CREATE_CARD:
-            const updatedCards = [...state.cards]
-            updatedCards.push(action.payload)
+        case SET_USERS:
             return {
                 ...state,
-                cards: updatedCards
+                users: action.payload,
+            }
+
+        case CREATE_CARD:
+            const updatedQuestions = [...state.questions]
+            updatedQuestions.push(action.payload)
+            console.log(action.payload)
+            return {
+                ...state,
+                questions: updatedQuestions
             }
 
         case CREATE_RESPONSE:
-            const updatedResponses = [...state.responses]
-            updatedResponses.push(action.payload)
+            const { questions, users } = action.payload
             return {
                 ...state,
-                responses: updatedResponses
-            }
+                questions,
+                users
+        }
+
 
         default:
             return state

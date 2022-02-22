@@ -9,19 +9,35 @@ import {
     Typography,
 } from "@material-ui/core"
 import { useDispatch, useSelector } from "react-redux"
-import { createQuestion } from "../../Redux/actions";
+import {createQuestion } from "../../Redux/actions"
+import { _saveQuestion } from "../../_DATA"
+import { useNavigate } from "react-router-dom"
 
 const CreateQuestion = () => {
     const [newQuestion, setNewQuestion] = useState({ optionOne: '', optionTwo: '' })
+    const [error, setError] = useState(false)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const author = useSelector(state => state.auth.user)
 
     const handleSubmitQuestion = () => {
-        dispatch(createQuestion({...newQuestion, author, id: crypto.randomUUID() }))
-        setNewQuestion({ optionOne: '', optionTwo: '' })
-    }
+        _saveQuestion({
+            author: author.id,
+            optionOneText: newQuestion.optionOne,
+            optionTwoText: newQuestion.optionTwo
+            })
+            .then(res => {
+                dispatch(createQuestion(res))
+                setNewQuestion({ optionOne: '', optionTwo: '' })
+                navigate("../", { replace: true })
+            })
+            .catch((error) => {
+                    console.log(error)
+                    setError(true)
+                }
+            )
 
-    console.log(newQuestion)
+    }
 
     return (
         <div style={{ width: '450px', display: 'block', margin: 'auto' }}>

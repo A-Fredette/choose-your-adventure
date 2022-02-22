@@ -1,47 +1,57 @@
-import React, {useEffect, useState} from 'react'
-import {useDispatch, useSelector} from "react-redux"
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from "react-redux"
 import QuestionCard from "./QuestionCard"
 import ResultCard from "./ResultCard"
 import { _getQuestions } from "../../_DATA"
 import { setQuestions } from "../../Redux/actions"
+import { Switch } from "@material-ui/core"
+import { formatData } from "./QuestionCard"
+import { Link } from "react-router-dom"
 
 const Home = () => {
-    const user = useSelector(state => state.auth.user)
     const dispatch = useDispatch()
-    const userResponses = useSelector(state => state.responses.filter(r => r.by === user))
     const questions = useSelector(state => state.questions)
+    const user = useSelector(state => state.auth.user.id)
+    const answers = useSelector(state => state.users.find(u => u.id === user).answers)
+    const [questionView, setQuestionView] = useState(true)
 
     useEffect(() => {
         _getQuestions()
             .then(questions => {
-                const arr = Object.entries(questions)
-                let processedQuestions = []
-                arr.map(u => processedQuestions.push(u[1]))
-                console.log('process questions', processedQuestions)
-
-                dispatch(setQuestions(processedQuestions))
+                const formattedQuestion = formatData(questions)
+                dispatch(setQuestions(formattedQuestion))
             })
             .catch(error => console.log(error))
-    },[])
+    },[dispatch])
 
+    const answeredQuestions = Object.keys(answers)
+
+    const handleViewChange = () =>
+        setQuestionView(!questionView)
 
     return (
         <div>
-            { questions.map(c => {
-                // if (userResponses.some(r => r.card === c.id)) {
-                //     return (
-                //         <ResultCard
-                //             card={c}
-                //         />
-                //     )
-                // } else {
+            <div style={{ display: 'flex' }}>
+                <p>Unanswered</p>
+                <Switch onChange={handleViewChange}/>
+                <p>Answered</p>
+            </div>
+            { questions.map(q => {
+                if (!questionView && answeredQuestions.includes(q.id)) {
                     return (
-                        <QuestionCard
-                            card={c}
-                        />
+                        <Link to={{ pathname: `/question/${q.id}` }}>
+                            <ResultCard card={q} />
+                        </Link>
+                    )
+                } else if (questionView && !answeredQuestions.includes(q.id)) {
+                    return (
+                        <Link to={{ pathname: `/question/${q.id}` }}>
+                            <QuestionCard card={q} />
+                        </Link>
                     )
                 }
-            )}
+                return <div />
+            })}
         </div>
     )
 }
