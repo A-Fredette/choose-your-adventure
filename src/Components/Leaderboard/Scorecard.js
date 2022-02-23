@@ -4,8 +4,7 @@ import {
     Card,
     CardActions,
     CardContent,
-    Box,
-    Typography
+    Box
 } from "@material-ui/core"
 import { ScorecardStyle } from "./Styled"
 
@@ -22,27 +21,27 @@ const Scorecard = (
                 <Card>
                     <CardContent>
 
-                        <Typography sx={{ fontSize: 14 }} color="text.primary" gutterBottom>
+                        <h4>
                             { name }
-                        </Typography>
+                        </h4>
 
-                        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                        <h4>
                             Answered Questions: { answers }
-                        </Typography>
+                        </h4>
 
-                        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                        <h4>
                             Created Questions: { created }
-                        </Typography>
+                        </h4>
 
                         <Box>
 
-                            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                            <h3>
                                 Total Score
-                            </Typography>
+                            </h3>
 
-                            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                            <h2>
                                 { totalScore }
-                            </Typography>
+                            </h2>
 
                         </Box>
 

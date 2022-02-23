@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
-import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import { connect, useDispatch } from "react-redux"
@@ -23,18 +22,12 @@ function TabPanel(props) {
         >
             { value === index && (
                 <Box p={3}>
-                    <Typography>{ children }</Typography>
+                    <h3>{ children }</h3>
                 </Box>
             )}
         </div>
     )
 }
-//
-// TabPanel.propTypes = {
-//     children: PropTypes.node,
-//     index: PropTypes.any.isRequired,
-//     value: PropTypes.any.isRequired,
-// }
 
 function a11yProps(index) {
     return {
@@ -65,7 +58,7 @@ const SimpleTabs = ({ auth }) => {
     return (
         <div className={classes.root}>
             <AppBar position="static">
-                <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" centered>
+                <Tabs value={value} onChange={ handleChange } aria-label="simple tabs example" centered>
                     <Tab label="Home" {...a11yProps(0)}
                          onClick={ () => navigate("/", { replace: true }) }
                     />
@@ -78,7 +71,7 @@ const SimpleTabs = ({ auth }) => {
                     { auth.isAuthenticated &&
                         <div style={{ display: 'flex' }}>
                             <img alt={`avatar of ${auth.user.name}`} src={ auth.user.avatarURL } style={{ width: '40px' }}/>
-                            <Typography>{auth.user.name}</Typography>
+                            <h4 style={{ margin: 'auto 1em' }}>{auth.user.name}</h4>
                             <Button onClick={handleLogout}>Logout</Button>
                         </div>
                     }

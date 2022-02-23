@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"
+import { QuestionCardStyles } from "./Styled"
 import {
     Card,
     CardActions,
@@ -14,6 +15,7 @@ import {
 import Button from "@material-ui/core/Button"
 import { createResponse } from "../../Redux/actions"
 import { _saveQuestionAnswer } from "../../_DATA"
+import { useNavigate } from "react-router-dom";
 
 export const formatData = objToFormat => {
     let formattedData = []
@@ -29,6 +31,7 @@ const QuestionCard = ({ card }) => {
     const [error, setError] = useState(false)
     const user = useSelector(state => state.auth.user.id)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const handleResponseSubmit = () => {
         _saveQuestionAnswer({ authedUser: user, qid: id, answer: choice })
@@ -36,6 +39,7 @@ const QuestionCard = ({ card }) => {
                 const questions = formatData(res.questions)
                 const users = formatData(res.users)
                 dispatch(createResponse({ questions, users }))
+                navigate(`/question/${id}`, { replace: true })
             })
             .catch((error) => {
                     console.log(error)
@@ -45,8 +49,8 @@ const QuestionCard = ({ card }) => {
     }
 
     return (
-        <div style={{ width: '450px', display: 'block', margin: 'auto' }}>
-                <Card>
+        <QuestionCardStyles>
+                <Card className="elevation7">
                     <CardContent>
                         { error
                             ? (
@@ -55,20 +59,21 @@ const QuestionCard = ({ card }) => {
                                 </Typography>
                             ) : (
                                 <>
-                                    <Typography sx={{ fontSize: 14 }} color="text.primary" gutterBottom>
+                                    <h3>
                                         {author + ' asks:'}
-                                    </Typography>
+                                    </h3>
 
                                     <FormControl sx={{ m: 3 }} variant="standard">
                                         <FormLabel id="demo-error-radios">Would You Rather...</FormLabel>
                                         <RadioGroup aria-labelledby="demo-error-radios" name="would-you-rather">
                                             <FormControlLabel value="1"
-                                                              onChange={() => setChoice('optionOne') } control={<Radio />} label={optionOne.text} />
+                                                onChange={() => setChoice('optionOne') } control={<Radio />} label={optionOne.text} />
                                             <FormControlLabel value="2"
-                                                              onChange={() => setChoice('optionTwo') } control={<Radio />} label={optionTwo.text} />
+                                                onChange={() => setChoice('optionTwo') } control={<Radio />} label={optionTwo.text} />
                                         </RadioGroup>
                                         <Button sx={{ mt: 1, mr: 1 }} type="submit" variant="outlined"
-                                                onClick={handleResponseSubmit}>
+                                            onClick={ handleResponseSubmit }
+                                        >
                                             Submit
                                         </Button>
                                     </FormControl>
@@ -78,9 +83,8 @@ const QuestionCard = ({ card }) => {
                     </CardContent>
                     <CardActions />
                 </Card>
-        </div>
+        </QuestionCardStyles>
     )
 }
 
 export default QuestionCard
-

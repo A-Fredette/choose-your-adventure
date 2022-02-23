@@ -17,7 +17,7 @@ const SignInStyles = styled.div`
 function SignIn() {
     let navigate = useNavigate()
 
-    const [user, setUser] = useState({})
+    const [user, setUser] = useState(null)
     const [users, setUsers] = useState([])
     const dispatch = useDispatch()
 
@@ -43,20 +43,18 @@ function SignIn() {
         <div style={{ width: '450px', display: 'block', margin: 'auto' }}>
             <Card>
                 <CardContent>
-                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                    <h1>
                         Welcome to the Would You Rather App!
-                    </Typography>
-                    <Typography variant="h5" component="div">
-                    </Typography>
-                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                    </h1>
+                    <h3>
+                    </h3>
+                    <h3>
                         Please sign in to continue.
-                    </Typography>
+                    </h3>
 
                     <SignInStyles>
-                        <FormControl required>
                             <InputLabel id="demo-simple-select-label">Select User</InputLabel>
                             <Select
-                                labelId="select-user"
                                 id="select-user"
                                 label="User"
                                 placeholder="-- Select User --"
@@ -66,13 +64,12 @@ function SignIn() {
                             >
 
                                 { users.length > 0 && users.map(user =>
-                                        <MenuItem key={ user.id} value={ user }>{ user.name }
-                                            <img alt={`avatar of ${user.name}`} src={ user.avatarURL } style={{ width: '40px' }}/>
-                                        </MenuItem>
+                                    <MenuItem key={ user.id} value={ user }>{ user.name }
+                                        <img alt={`avatar of ${user.name}`} src={ user.avatarURL } style={{ width: '40px' }}/>
+                                    </MenuItem>
                                 )}
 
                             </Select>
-                        </FormControl>
 
                     </SignInStyles>
 

@@ -6,8 +6,7 @@ const Leaderboard = () => {
     let scores = []
     const users = useSelector(state => state.users)
 
-    const getScores = scoreObject =>
-        Object.keys(scoreObject).length
+    const getScores = scoreObject => Object.keys(scoreObject).length
 
     users.forEach(user => {
         const score = {
@@ -22,11 +21,8 @@ const Leaderboard = () => {
         scores.push(score)
     })
 
-    console.log(scores)
-
-
     scores.sort((a, b) => {
-        return a.totalScore - b.totalScore
+        return b.totalScore - a.totalScore
     })
 
     return (
@@ -34,6 +30,7 @@ const Leaderboard = () => {
 
             { scores.map(s =>
                 <Scorecard
+                    key={s.id}
                     score={s}
                 />
             )}

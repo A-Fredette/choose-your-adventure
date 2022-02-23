@@ -6,12 +6,18 @@ import {
     CardContent,
     Typography
 } from "@material-ui/core"
+import { useNavigate } from "react-router-dom";
+import {QuestionCardStyles, ResultCardStyles} from "./Styled";
 
 const ResultCard = ({ card }) => {
 
     const { id, author, optionOne, optionTwo } = card
+
     const users = useSelector(state => state.users)
+    const authUser = useSelector(state => state.auth.user.id)
+    const authAnswers = useSelector(state => state.users.find(u => u.id === authUser).answers)
     const [answers, setAnswers] = useState([])
+    const navigate = useNavigate()
 
     useEffect(() => {
         const ans = users.map(u => u.answers[id]).filter(Boolean)
@@ -27,33 +33,42 @@ const ResultCard = ({ card }) => {
     }
 
     return (
-        <div style={{ width: '450px', display: 'block', margin: 'auto' }}>
+        <ResultCardStyles>
             <Card>
-                <CardContent>
+                <CardContent
+                    onClick={ () => navigate(`/question/${id}`, { replace: true }) }
+                >
 
-                    <Typography sx={{ fontSize: 14 }} color="text.primary" gutterBottom>
-                        {'Asked by ' + author}
-                    </Typography>
-
-                    <Typography sx={{ fontSize: 14 }} color="text.primary" gutterBottom>
+                    <h1>
                         Results
-                    </Typography>
+                    </h1>
 
-                    <Typography sx={{ fontSize: 14 }} color="text.primary" gutterBottom>
-                        {optionOne.text}
-                        <p>{getAnswerCounts(answers).optionOne} Choices</p>
-                    </Typography>
+                    <h3 className="author">
+                        {'Asked by ' + author}
+                    </h3>
 
-                    <Typography sx={{ fontSize: 14 }} color="text.primary" gutterBottom>
-                        {optionTwo.text}
-                        <p>{getAnswerCounts(answers).optionTwo} Choices</p>
-                    </Typography>
+                    <h3>
+                        <>
+                            <span>A --></span> {optionOne.text}
+                            <p>{getAnswerCounts(answers).optionOne} Choices {authAnswers[id] === 'optionOne'
+                                && <span>(your choice)</span>}
+                            </p>
+                        </>
 
+                    </h3>
+
+                    <h3>
+                        <span>B --></span> {optionTwo.text}
+                        <p>{getAnswerCounts(answers).optionTwo} Choices {authAnswers[id] === 'optionTwo'
+                            && <span>(your choice)</span>}
+                        </p>
+
+                    </h3>
 
                 </CardContent>
                 <CardActions />
             </Card>
-        </div>
+        </ResultCardStyles>
     )
 }
 

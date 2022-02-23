@@ -6,7 +6,6 @@ import { _getQuestions } from "../../_DATA"
 import { setQuestions } from "../../Redux/actions"
 import { Switch } from "@material-ui/core"
 import { formatData } from "./QuestionCard"
-import { Link } from "react-router-dom"
 
 const Home = () => {
     const dispatch = useDispatch()
@@ -26,32 +25,34 @@ const Home = () => {
 
     const answeredQuestions = Object.keys(answers)
 
-    const handleViewChange = () =>
-        setQuestionView(!questionView)
+    const handleViewChange = () => setQuestionView(!questionView)
+
+    questions.sort((a,b) => b.timestamp - a.times)
 
     return (
         <div>
             <div style={{ display: 'flex' }}>
-                <p>Unanswered</p>
-                <Switch onChange={handleViewChange}/>
+                <p>Unanswered</ p>
+                <Switch onChange={ handleViewChange }/>
                 <p>Answered</p>
             </div>
+
             { questions.map(q => {
                 if (!questionView && answeredQuestions.includes(q.id)) {
                     return (
-                        <Link to={{ pathname: `/question/${q.id}` }}>
-                            <ResultCard card={q} />
-                        </Link>
+                        <ResultCard key={q.id} card={q} />
                     )
+
                 } else if (questionView && !answeredQuestions.includes(q.id)) {
                     return (
-                        <Link to={{ pathname: `/question/${q.id}` }}>
-                            <QuestionCard card={q} />
-                        </Link>
+                        <QuestionCard key={q.id} card={q} />
                     )
                 }
+
                 return <div />
+
             })}
+
         </div>
     )
 }

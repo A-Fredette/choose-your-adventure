@@ -35,7 +35,6 @@ function appReducer(state = initialState, action) {
         case CREATE_CARD:
             const updatedQuestions = [...state.questions]
             updatedQuestions.push(action.payload)
-            console.log(action.payload)
             return {
                 ...state,
                 questions: updatedQuestions
