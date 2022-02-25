@@ -26,6 +26,7 @@ const CreateQuestion = () => {
             optionTwoText: newQuestion.optionTwo
             })
             .then(res => {
+                console.log('new questions', res)
                 dispatch(createQuestion(res))
                 setNewQuestion({ optionOne: '', optionTwo: '' })
                 navigate("../", { replace: true })

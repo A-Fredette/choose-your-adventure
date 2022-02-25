@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import QuestionCard from "./QuestionCard"
-import ResultCard from "./ResultCard"
-import { _getQuestions } from "../../_DATA"
-import { setQuestions } from "../../Redux/actions"
+import AnsweredCard from "./AnsweredCard"
+import { getQuestions } from "../../Redux/actions"
 import { Switch } from "@material-ui/core"
-import { formatData } from "./QuestionCard"
 
 const Home = () => {
     const dispatch = useDispatch()
@@ -15,19 +13,13 @@ const Home = () => {
     const [questionView, setQuestionView] = useState(true)
 
     useEffect(() => {
-        _getQuestions()
-            .then(questions => {
-                const formattedQuestion = formatData(questions)
-                dispatch(setQuestions(formattedQuestion))
-            })
-            .catch(error => console.log(error))
+        dispatch(getQuestions())
     },[dispatch])
 
     const answeredQuestions = Object.keys(answers)
-
     const handleViewChange = () => setQuestionView(!questionView)
 
-    questions.sort((a,b) => b.timestamp - a.times)
+    questions.sort((a,b) => b.timestamp - a.timestamp)
 
     return (
         <div>
@@ -40,7 +32,7 @@ const Home = () => {
             { questions.map(q => {
                 if (!questionView && answeredQuestions.includes(q.id)) {
                     return (
-                        <ResultCard key={q.id} card={q} />
+                        <AnsweredCard key={q.id} card={q} />
                     )
 
                 } else if (questionView && !answeredQuestions.includes(q.id)) {

@@ -1,43 +1,25 @@
-import React, {useEffect, useState} from 'react'
-import {Card, Select, MenuItem, CardContent, Typography, CardActions, FormControl, Button, InputLabel  } from '@material-ui/core'
-import { useDispatch } from 'react-redux'
-import styled from "styled-components"
-import {authenticateUser, setUsersRedux } from '../../Redux/actions'
-import { _getUsers } from "../../_DATA"
+import React, { useEffect, useState } from 'react'
+import { Card, Select, MenuItem, CardContent, CardActions, Button, InputLabel } from '@material-ui/core'
+import { useDispatch, useSelector } from 'react-redux'
+import { SignInStyles } from "./Styled"
+import { authenticateUser, getUsers } from '../../Redux/actions'
 import { useNavigate } from "react-router-dom"
 
-const SignInStyles = styled.div`
-    width: auto;
-  
-  #select-user {
-    width: 300px;
-  }
-`
-
-function SignIn() {
-    let navigate = useNavigate()
-
+function SignIn({ path }) {
     const [user, setUser] = useState(null)
-    const [users, setUsers] = useState([])
+
+    let navigate = useNavigate()
     const dispatch = useDispatch()
+    const users = useSelector(state => state.users)
 
     const handleSubmit = () => {
         dispatch(authenticateUser(user))
-        navigate("../", { replace: true })
+        navigate(path, { replace: true })
     }
 
     useEffect(() => {
-        _getUsers()
-            .then(dataUsers => {
-                const arr = Object.entries(dataUsers)
-                let processedUsers = []
-                arr.map(u => processedUsers.push(u[1]))
-
-                setUsers(processedUsers)
-                dispatch(setUsersRedux(processedUsers))
-            })
-            .catch(error => console.log(error))
-    },[])
+        dispatch(getUsers())
+    }, [])
 
     return (
         <div style={{ width: '450px', display: 'block', margin: 'auto' }}>

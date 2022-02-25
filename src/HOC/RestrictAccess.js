@@ -1,19 +1,21 @@
 import React from 'react'
 import { connect } from "react-redux"
-import { Navigate } from "react-router-dom"
+import { useLocation } from "react-router-dom"
+import SignIn from "../Components/SignIn/SignIn"
 
 export function restrictAccess(WrappedComponent) {
 
     const Access = ({authedUser}) => {
+
+        const { pathname } = useLocation()
+
         if (authedUser) {
             return (
-                <>
-                    <WrappedComponent />
-                </>
+                <WrappedComponent />
             )
         } else {
             return (
-                <Navigate to="/signin" />
+                <SignIn path={ pathname } />
             )
 
         }

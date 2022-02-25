@@ -5,13 +5,14 @@ import Scorecard from "./Scorecard"
 const Leaderboard = () => {
     let scores = []
     const users = useSelector(state => state.users)
+    const questions = useSelector(state => state.questions)
 
     const getScores = scoreObject => Object.keys(scoreObject).length
 
     users.forEach(user => {
         const score = {
             answers: getScores(users.find(u => u.id === user.id).answers),
-            created: getScores(users.find(u => u.id === user.id).questions),
+            created: getScores(questions.filter(q => q.author === user.id)),
             get totalScore() {
                 return this.answers + this.created
             },
@@ -20,6 +21,8 @@ const Leaderboard = () => {
         }
         scores.push(score)
     })
+
+    console.log(scores)
 
     scores.sort((a, b) => {
         return b.totalScore - a.totalScore

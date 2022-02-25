@@ -9,6 +9,7 @@ import Home from "../Components/Home/Home"
 import { restrictAccess } from "../HOC/RestrictAccess"
 import CreateQuestion from "../Components/CreateQuestion/CreateQuestion"
 import Leaderboard from "../Components/Leaderboard/Leaderboard"
+import NotFound from "../Components/Notfound";
 
 const AuthorizedHome = restrictAccess(Home)
 const AuthorizedCreate = restrictAccess(CreateQuestion)
@@ -26,22 +27,21 @@ const AppRoutes = () => {
             <Route
                 path='/question/:questionId'
                 element={ <AuthorizedResults /> }
-            >
-            </Route>
+            />
             <Route
                 path='/add'
                 element={ <AuthorizedCreate /> }
-            >
-            </Route>
+            />
             <Route
                 path='/leaderboard'
                 element={ <AuthorizedLeaderboard /> }
-            >
-            </Route>
+            />
             <Route path='/signin'
                 element={ <SignIn /> }
-            >
-            </Route>
+            />
+            <Route path='*'
+                   element={ <NotFound /> }
+            />
         </Routes>
     )
 }

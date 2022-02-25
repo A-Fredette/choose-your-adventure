@@ -1,10 +1,18 @@
 import { initialState } from "./configureStore"
-const AUTHENTICATE_USER = 'AUTHENTICATE_USER'
-const CREATE_CARD = 'CREATE_CARD'
-const CREATE_RESPONSE = 'CREATE_RESPONSE'
-const LOGOUT_USER = 'LOGOUT_USER'
-const SET_QUESTIONS = 'SET_QUESTIONS'
-const SET_USERS = 'SET_USERS'
+import {
+    SET_USERS,
+    SET_QUESTIONS,
+    LOGOUT_USER,
+    CREATE_RESPONSE,
+    CREATE_CARD,
+    LOADING_USERS,
+    LOADING_USERS_FAILURE,
+    AUTHENTICATE_USER,
+    LOADING_USERS_SUCCESS,
+    LOADING_QUESTIONS,
+    LOADING_QUESTIONS_SUCCESS,
+    LOADING_QUESTIONS_FAILURE
+} from "./actions"
 
 function appReducer(state = initialState, action) {
     switch (action.type) {
@@ -48,6 +56,41 @@ function appReducer(state = initialState, action) {
                 users
         }
 
+        case LOADING_USERS_FAILURE:
+            return {
+                ...state,
+                loadingUsers: action.payload
+            }
+
+        case LOADING_USERS:
+            return {
+                ...state,
+                loadingUsers: true
+            }
+
+        case LOADING_USERS_SUCCESS:
+            return {
+                ...state,
+                loadingUsers: false
+            }
+
+        case LOADING_QUESTIONS_FAILURE:
+            return {
+                ...state,
+                loadingQuestions: action.payload
+            }
+
+        case LOADING_QUESTIONS:
+            return {
+                ...state,
+                loadingQuestions: true
+            }
+
+        case LOADING_QUESTIONS_SUCCESS:
+            return {
+                ...state,
+                loadingQuestions: false
+            }
 
         default:
             return state
