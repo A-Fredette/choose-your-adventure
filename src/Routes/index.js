@@ -25,7 +25,7 @@ const AppRoutes = () => {
                 element={ <AuthorizedHome /> }
             />
             <Route
-                path='/question/:questionId'
+                path='/questions/:questionId'
                 element={ <AuthorizedResults /> }
             />
             <Route

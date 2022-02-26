@@ -37,7 +37,7 @@ const AnsweredCard = ({ card }) => {
 
                 </CardContent>
                 <CardActions />
-                <p className="results-link" onClick={ () => navigate(`/question/${id}`, { replace: true }) }>See Results</p>
+                <p className="results-link" onClick={ () => navigate(`/questions/${id}`, { replace: true }) }>See Results</p>
             </Card>
         </ResultCardStyles>
     )

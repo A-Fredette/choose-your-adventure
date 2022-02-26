@@ -2,6 +2,7 @@ import React from 'react'
 import { useLocation } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { QuestionResultsStyle } from "./Styled"
+import Notfound from "../Notfound"
 
 const QuestionResults = () => {
 
@@ -19,22 +20,28 @@ const QuestionResults = () => {
     }
 
     return (
-        <QuestionResultsStyle>
-            <h1>Would you rather??</h1>
-            <img alt={`avatar of ${user.name}`} src={ `../${user.avatarURL}` } style={{ width: '40px' }}/>
-            <p>{user.name} Asks...</p>
-            <div>
-                <h2>{ question.optionOne.text }</h2>
-                <h3>Votes: { question.optionOne.votes.length } -- ({ calcPercents().optionOne })</h3>
-                { question.optionOne.votes.includes(user.id) && <span> (your choice)</span> }
-            </div>
-            <h4> --- OR --- </h4>
-            <div>
-                <h2>{ question.optionTwo.text }</h2>
-                <h3>Votes: { question.optionTwo.votes.length } -- ({ calcPercents().optionTwo })</h3>
-                { question.optionTwo.votes.includes(user.id) && <span> (your choice)</span> }
-            </div>
-        </QuestionResultsStyle>
+        <>
+            {!question
+                ? <Notfound />
+                : <QuestionResultsStyle>
+                    <h1>Would you rather??</h1>
+                    <img alt={`avatar of ${user.name}`} src={ `../${user.avatarURL}` } style={{ width: '40px' }}/>
+                    <p>{user.name} Asks...</p>
+                    <div>
+                        <h2>{ question.optionOne.text }</h2>
+                        <h3>Votes: { question.optionOne.votes.length } -- ({ calcPercents().optionOne })</h3>
+                        { question.optionOne.votes.includes(user.id) && <span> (your choice)</span> }
+                    </div>
+                    <h4> --- OR --- </h4>
+                    <div>
+                        <h2>{ question.optionTwo.text }</h2>
+                        <h3>Votes: { question.optionTwo.votes.length } -- ({ calcPercents().optionTwo })</h3>
+                        { question.optionTwo.votes.includes(user.id) && <span> (your choice)</span> }
+                    </div>
+                </QuestionResultsStyle>
+            }
+        </>
+
     )
 }
 
