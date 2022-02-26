@@ -30,6 +30,7 @@ const Home = () => {
             </div>
 
             { questions.map(q => {
+                console.log(q.id)
                 if (!questionView && answeredQuestions.includes(q.id)) {
                     return (
                         <AnsweredCard key={q.id} card={q} />
@@ -41,7 +42,7 @@ const Home = () => {
                     )
                 }
 
-                return <div />
+                return <div key={q.id} />
 
             })}
 
